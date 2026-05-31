@@ -112,3 +112,42 @@ graph LR
     style Runner fill:#2dba4e,color:#fff
     style Log fill:#ff4757,color:#fff
 
+
+
+## 🌐 Dashboard en vivo
+👉 [Ver dashboard público](https://vigisalud-ai.github.io/Vigisalud-dashboard/)
+
+## 🛠️ Tecnologías
+- 🐍 Python 3.11 + scikit-learn + pandas
+- 🐘 Supabase (PostgreSQL + RLS)
+- 📱 Termux (Moto G56)
+- ☁️ Azure App Service
+- 📊 Chart.js + GitHub Pages
+- 🤖 NVIDIA Llama 3.3 (partes clínicos)
+
+## 🕐 Huso Horario
+Todos los datos se almacenan en **UTC**.
+
+## 🔒 Seguridad y Cumplimiento
+- **Cifrado:** SSL/TLS + AES-256 (Supabase)
+- **Anonimización:** Seudonimización antes de APIs externas
+- **RLS:** Row Level Security en todas las tablas
+
+## 🔗 Interoperabilidad
+- **Estándar:** HL7/FHIR (próxima fase)
+- **Conexión:** API REST + CSV
+
+## 🧭 Filosofía del proyecto
+
+| Principio | Por qué importa |
+|-----------|-----------------|
+| 🩺 **Doble validación** | Responde a una necesidad clínica real |
+| 📱 **Sin compu no es excusa** | Termux + GitHub Actions = producción |
+| 💰 **Costo cero** | Stack 100% gratuito |
+| 🧠 **KISS** | Arquitectura modular |
+
+## 👤 Autor
+Hector | [GitHub](https://github.com/vigisalud-ai)
+
+## 📝 Licencia
+MIT
