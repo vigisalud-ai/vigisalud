@@ -1,0 +1,21 @@
+name: Limpieza de datos viejos
+
+on:
+  schedule:
+    - cron: '0 7 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  limpiar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - run: python ingesta/controller/limpiar_datos.py
+        env:
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
