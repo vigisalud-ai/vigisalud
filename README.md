@@ -113,7 +113,6 @@ graph LR
     style Log fill:#ff4757,color:#fff
 
 
-
 ## 🌐 Dashboard en vivo
 👉 [Ver dashboard público](https://vigisalud-ai.github.io/Vigisalud-dashboard/)
 
