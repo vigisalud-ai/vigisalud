@@ -26,6 +26,11 @@
 - Incorporar variables externas (clima, contaminación)
 - Gradient Boosting como alternativa a Random Forest
 - Regresión Logística para clasificación de riesgo (alto/bajo)
+## 🎯 Fase 3.5: Hacia la v4.0 (puntuación 10/10)
+
+- **Monitoreo de Data Drift:** Alerta automática si el MAE semanal supera el 20% del baseline (7.0)
+- **Serialización del modelo:** Guardar pipeline entrenado con `joblib` para inferencia sin reentrenamiento
+- **Modularidad completa:** Separar `extract.py`, `train.py`, `infer.py` con Pipeline scikit-learn
 
 ## 🫀 Fase 4: VigiSalud Vascular
 - Dataset cardiovascular real (infarto/ACV)
