@@ -49,70 +49,25 @@ El core predictivo está diseñado bajo estrictos criterios de validación crono
 | **Features** | 13 | 14 + `finde_largo` | +1 |
 | **Registros** | 378 | 378 | - |
 
-
 ## 🔄 Arquitectura General
 
-```mermaid
-flowchart TD
-    A[📊 Fuentes de Datos] --> B[🐍 Scripts de Ingesta]
-    B --> C[🐘 Supabase PostgreSQL]
-    C --> D[🧠 Modelo Predictivo]
-    D --> E[📈 Predicciones]
-    E --> F[📊 Dashboard]
-    
-    subgraph Fuentes
-        A1[🌐 World Bank API]
-        A2[🌡️ Open-Meteo API]
-    end
-    
-    subgraph Ingesta
-        B1[datos_reales.py]
-        B2[datos_extra.py]
-        B3[openmeteo.py]
-    end
-    
-    subgraph Modelos
-        D1[modelo_v3_5.py]
-        D2[GitHub Actions - 6 AM]
-    end
-    
-    subgraph Dashboard
-        F1[Supabase Charts]
-        F2[Chart.js + GitHub Pages]
-    end
-    
-    A1 --> B1
-    A2 --> B3
-    B1 --> C
-    B2 --> C
-    B3 --> C
-    C --> D1
-    D1 --> D2
-    D1 --> E
-    E --> F1
-    E --> F2
-```
+| Etapa | Entrada | Salida |
+|-------|---------|--------|
+| 🌐 **Fuentes** | World Bank API, Open-Meteo | Datos crudos (CSV/JSON) |
+| 🐍 **Ingesta** | `datos_reales.py`, `datos_extra.py`, `openmeteo.py` | Tablas en Supabase |
+| 🐘 **Base de datos** | Supabase PostgreSQL | Datos limpios y normalizados |
+| 🧠 **Modelo** | `modelo_v3_5.py` (Random Forest) | Predicciones (MAE 7.0) |
+| 📈 **Predicciones** | TimeSeriesSplit | 21 predicciones a 7 días |
+| 📊 **Dashboard** | Chart.js + Supabase Charts | Visualización interactiva |
 
 ## ⏰ Orquestación Diaria
 
-```mermaid
-graph LR
-    subgraph Orquestacion [GitHub Actions]
-        Cron[⏰ 6 AM] -->|Dispara| Runner[Runner Virtual]
-        Runner -->|Ejecuta| Script[modelo_v3_5.py]
-    end
-    subgraph Pipeline
-        Script -->|Consulta| DB[(Supabase)]
-        Script -->|Entrena| RF[Random Forest]
-        RF -->|Calcula| Eval[MAE / RMSE]
-    end
-    subgraph Resultados
-        Eval -->|Guarda| Log[(logs_metricas)]
-    end
-    style Cron fill:#24292e,color:#fff
-    style Runner fill:#2dba4e,color:#fff
-    style Log fill:#ff4757,color:#fff
-
+| Hora | Acción | Resultado |
+|------|--------|-----------|
+| ⏰ **6 AM** | GitHub Actions ejecuta `modelo_v3_5.py` | Predicciones frescas |
+| 🧠 | Random Forest entrena con datos históricos | Modelo actualizado |
+| 📊 | Cálculo de MAE/RMSE | Métricas en `logs_metricas` |
+| 📱 | Alertas por Telegram | Notificación al equipo |
 
 ## 🌐 Dashboard en vivo
 👉 [Ver dashboard público](https://vigisalud-ai.github.io/Vigisalud-dashboard/)
