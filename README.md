@@ -25,7 +25,7 @@ Anticipar picos de consultas por zona con 1-2 semanas de anticipación para prio
 
 El core predictivo está diseñado bajo estrictos criterios de validación cronológica y eficiencia computacional para entornos móviles.
 [Inferencia] ──────────────► Random Forest Regressor ──► Despliegue en JSON (Dashboard)
-```
+
 ### 🧠 Componentes Clave
 
 - **Algoritmo:** Random Forest Regressor (Optimizado para relaciones no lineales exógenas)
