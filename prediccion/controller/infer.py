@@ -21,9 +21,9 @@ fecha_min = df['fecha'].min()
 fecha_max = df['fecha'].max()
 fechas_fut = [fecha_max + timedelta(days=i) for i in range(1, 8)]
 
-features_num = ['dia_desde_inicio', 'mes', 'dia_semana', 'consultas_lag_1', 'consultas_lag_7',
-                'consultas_lag_14', 'consultas_ma7', 'es_fin_de_semana', 'es_feriado',
-                'es_vacaciones', 'finde_largo']
+features_num = ['dia_desde_inicio', 'mes', 'dia_semana', 'mes_sin', 'dia_semana_sin',
+                'consultas_lag_1', 'consultas_lag_7', 'consultas_lag_14', 'consultas_ma7',
+                'es_fin_de_semana', 'es_feriado', 'es_vacaciones', 'es_no_laboral', 'finde_largo']
 
 predicciones = []
 
@@ -36,6 +36,9 @@ for zona in ['Norte', 'Centro', 'Sur']:
     futuro['es_feriado'] = futuro['fecha'].dt.strftime('%Y-%m-%d').isin(FERIADOS_NACIONALES).astype(int)
     futuro['es_vacaciones'] = futuro['fecha'].apply(lambda f: 1 if f.month in [1,2,7] or (f.month==12 and f.day>=15) else 0)
     futuro['finde_largo'] = 0
+    futuro['mes_sin'] = np.sin(2 * np.pi * futuro['mes'] / 12)
+    futuro['dia_semana_sin'] = np.sin(2 * np.pi * futuro['dia_semana'] / 7)
+    futuro['es_no_laboral'] = (futuro['es_fin_de_semana'] | futuro['es_feriado'] | futuro['es_vacaciones']).astype(int)
 
     last = df[df['zona'] == zona].iloc[-1]
     for col in ['consultas_lag_1', 'consultas_lag_7', 'consultas_lag_14', 'consultas_ma7']:

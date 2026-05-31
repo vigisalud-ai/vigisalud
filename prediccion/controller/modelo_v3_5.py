@@ -215,4 +215,7 @@ for _, row in df_pred.iterrows():
 
 print(f"✅ {alertas_enviadas} alertas procesadas")
 
+import joblib
+joblib.dump(modelo, 'modelo_v3_5.joblib')
+print("✅ Modelo guardado para inferencia")
 print("\n🎉 ¡Proceso completado correctamente!")
