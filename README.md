@@ -24,3 +24,91 @@ Anticipar picos de consultas por zona con 1-2 semanas de anticipación para prio
 ## ⚙️ Arquitectura del Pipeline y Modelado
 
 El core predictivo está diseñado bajo estrictos criterios de validación cronológica y eficiencia computacional para entornos móviles.
+[Inferencia] ──────────────► Random Forest Regressor ──► Despliegue en JSON (Dashboard)
+```
+### 🧠 Componentes Clave
+
+- **Algoritmo:** Random Forest Regressor (Optimizado para relaciones no lineales exógenas)
+- **Estrategia Anti-Leakage:** Validación temporal estricta (TimeSeriesSplit) para evitar contaminación de información futura
+- **Robustez Exógena:** Integración de factores climáticos (Open-Meteo) y dinámicas de movilidad urbana (fines de semana largos y feriados)
+
+### 🔧 Contingencias
+
+| Riesgo | Estrategia |
+|--------|------------|
+| **API Open-Meteo caída** | `SimpleImputer` rellena `temperatura_media` con la mediana histórica |
+| **Datos faltantes** | `SimpleImputer(strategy='median')` en features numéricas |
+| **Nuevas categorías** | `OneHotEncoder(handle_unknown='ignore')` |
+
+## 📊 Resultados
+
+| Métrica | v2.1 | v3.5 | Mejora |
+|---------|------|------|--------|
+| **MAE** | 41.3 | **7.0** | -83% |
+| **Backtesting (30 días)** | 13.4 | 7.0 | -48% |
+| **Features** | 13 | 14 + `finde_largo` | +1 |
+| **Registros** | 378 | 378 | - |
+
+## 🔄 Arquitectura General
+
+```mermaid
+flowchart TD
+    A[📊 Fuentes de Datos] --> B[🐍 Scripts de Ingesta]
+    B --> C[🐘 Supabase PostgreSQL]
+    C --> D[🧠 Modelo Predictivo]
+    D --> E[📈 Predicciones]
+    E --> F[📊 Dashboard]
+    
+    subgraph Fuentes
+        A1[🌐 World Bank API]
+        A2[🌡️ Open-Meteo API]
+    end
+    
+    subgraph Ingesta
+        B1[datos_reales.py]
+        B2[datos_extra.py]
+        B3[openmeteo.py]
+    end
+    
+    subgraph Modelos
+        D1[modelo_v3_5.py]
+        D2[GitHub Actions - 6 AM]
+    end
+    
+    subgraph Dashboard
+        F1[Supabase Charts]
+        F2[Chart.js + GitHub Pages]
+    end
+    
+    A1 --> B1
+    A2 --> B3
+    B1 --> C
+    B2 --> C
+    B3 --> C
+    C --> D1
+    D1 --> D2
+    D1 --> E
+    E --> F1
+    E --> F2
+
+
+## ⏰ Orquestación Diaria
+
+```mermaid
+graph LR
+    subgraph Orquestacion [GitHub Actions]
+        Cron[⏰ 6 AM] -->|Dispara| Runner[Runner Virtual]
+        Runner -->|Ejecuta| Script[modelo_v3_5.py]
+    end
+    subgraph Pipeline
+        Script -->|Consulta| DB[(Supabase)]
+        Script -->|Entrena| RF[Random Forest]
+        RF -->|Calcula| Eval[MAE / RMSE]
+    end
+    subgraph Resultados
+        Eval -->|Guarda| Log[(logs_metricas)]
+    end
+    style Cron fill:#24292e,color:#fff
+    style Runner fill:#2dba4e,color:#fff
+    style Log fill:#ff4757,color:#fff
+
