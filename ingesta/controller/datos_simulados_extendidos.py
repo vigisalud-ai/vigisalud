@@ -1,10 +1,12 @@
 # coding: utf-8
 import requests
 import numpy as np
+import os, sys
 from datetime import datetime, timedelta
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from prediccion.config import SUPABASE_KEY as API_KEY
 
 SUPABASE_URL = "https://qlbczflygozfvwyilhes.supabase.co/rest/v1/consultas_historicas"
-API_KEY = "TU_API_KEY"
 
 headers = {
     "apikey": API_KEY,

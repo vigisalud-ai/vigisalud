@@ -68,13 +68,24 @@ df['dia_desde_inicio'] = (df['fecha'] - df['fecha'].min()).dt.days
 df['mes'] = df['fecha'].dt.month
 df['dia_semana'] = df['fecha'].dt.weekday
 df['es_fin_de_semana'] = (df['dia_semana'] >= 5).astype(int)
-
 df['es_feriado'] = df['fecha'].dt.strftime('%Y-%m-%d').isin(FERIADOS_NACIONALES).astype(int)
 df['es_vacaciones'] = df['fecha'].apply(es_vacaciones)
 df['es_no_laboral'] = (df['es_fin_de_semana'] | df['es_feriado'] | df['es_vacaciones']).astype(int)
 
 df['mes_sin'] = np.sin(2 * np.pi * df['mes'] / 12)
 df['dia_semana_sin'] = np.sin(2 * np.pi * df['dia_semana'] / 7)
+
+# Fin de semana largo (viernes si el lunes es feriado, o lunes si el viernes fue feriado)
+df['finde_largo'] = 0
+for idx, row in df.iterrows():
+    if row['dia_semana'] == 4:  # Viernes
+        lunes = row['fecha'] + pd.Timedelta(days=3)
+        if lunes.strftime('%Y-%m-%d') in FERIADOS_NACIONALES:
+            df.at[idx, 'finde_largo'] = 1
+    if row['dia_semana'] == 0:  # Lunes
+        viernes = row['fecha'] - pd.Timedelta(days=3)
+        if viernes.strftime('%Y-%m-%d') in FERIADOS_NACIONALES:
+            df.at[idx, 'finde_largo'] = 1
 
 for lag in [1, 7, 14]:
     df[f'consultas_lag_{lag}'] = df.groupby('zona')['consultas'].shift(lag)
