@@ -35,6 +35,13 @@
 - Validación médica profesional
 - Dashboard con semáforo de riesgo por zona
 
+### 🌡️ Feature de riesgo vascular por temperatura
+- **Fuente:** Open-Meteo (ya integrado)
+- **Umbral:** < 5°C → riesgo aumentado de eventos isquémicos
+- **Validación clínica:** NVIDIA Llama 3.3
+- **Acción:** Alerta por Telegram con recomendación específica
+
+
 ## 🧠 Algoritmos en pipeline
 | Algoritmo | Estado | Uso |
 |-----------|--------|-----|
