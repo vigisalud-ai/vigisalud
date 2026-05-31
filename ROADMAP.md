@@ -20,7 +20,7 @@
 - Vista SQL corregida (`vw_promedio_consultas_predichas_por_zona_mes`)
 
 ## 🔜 Fase 3: Próximos pasos
-- Dashboard avanzado con Looker Studio
+- ~~Dashboard avanzado con Looker Studio~~ → **Chart.js + token por cliente** (más rápido, gratis, escalable)
 - Rotación automática de datos viejos
 - Ingesta diaria automatizada
 - Incorporar variables externas (clima, contaminación)
