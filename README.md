@@ -49,6 +49,7 @@ El core predictivo está diseñado bajo estrictos criterios de validación crono
 | **Features** | 13 | 14 + `finde_largo` | +1 |
 | **Registros** | 378 | 378 | - |
 
+
 ## 🔄 Arquitectura General
 
 ```mermaid
@@ -90,7 +91,7 @@ flowchart TD
     D1 --> E
     E --> F1
     E --> F2
-
+```
 
 ## ⏰ Orquestación Diaria
 
