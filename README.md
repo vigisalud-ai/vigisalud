@@ -89,15 +89,16 @@ python prediccion/controller/modelo_v3_5.py   # Pipeline completo
 python prediccion/controller/train.py         # Entrenar modelo
 python prediccion/controller/infer.py         # Inferencia
 python prediccion/controller/consulta_clinica.py  # Consulta a Llama 3.3
-
+```
 
 #🧭 Filosofía del Proyecto
 
-Principio Por qué importa
-🩺 Doble validación (médico + Estudiante de ingenieria en IA) Responde a una necesidad clínica real
-📱 Sin compu no es excusa Termux + GitHub Actions = producción
-💰 Costo cero Stack 100% gratuito
-🧠 KISS Arquitectura modular, cambiar de algoritmo requiere una línea
+| Principio | Por qué importa |
+|-----------|-----------------|
+| 🩺 **Doble validación** | Responde a una necesidad clínica real |
+| 📱 **Sin compu no es excusa** | Termux + GitHub Actions = producción |
+| 💰 **Costo cero** | Stack 100% gratuito |
+| 🧠 **KISS** | Arquitectura modular |
 
 
 🌐 Demo en Vivo
@@ -108,4 +109,3 @@ Principio Por qué importa
 📝 Licencia
 
 MIT License - Uso libre para fines educativos, de investigación y salud pública.
-
