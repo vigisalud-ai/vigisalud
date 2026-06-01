@@ -1,5 +1,16 @@
 # 📋 Changelog — VigiSalud
 
+## v3.5.1 — Junio 2026 🔧
+- n_estimators=100, max_depth=8 (modelo congelado)
+- Pipeline modular: train.py + infer.py + joblib
+- Inferencia multi-cliente con tabla instituciones
+- Detector de Data Drift (alerta si MAE > +20%)
+- Limpieza automática cada 72h
+- Consulta clínica interactiva con Llama 3.3
+- Feature `finde_largo` integrada
+- MAE 7.0 consistente
+- Organización vigisalud-ai en GitHub
+
 ## v3.5 — Mayo 2026 🚀
 - Modelo Random Forest con 14 features
 - MAE 7.5 consultas/día
