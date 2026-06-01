@@ -109,3 +109,4 @@ python prediccion/controller/consulta_clinica.py  # Consulta a Llama 3.3
 📝 Licencia
 
 MIT License - Uso libre para fines educativos, de investigación y salud pública.
+Para uso comercial o implementación institucional, contactar al autor.
