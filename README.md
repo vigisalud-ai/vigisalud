@@ -24,6 +24,7 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 - Validación temporal estricta (`TimeSeriesSplit`)
 - Dashboard web + Alertas automáticas por Telegram
 - Ejecución diaria con GitHub Actions
+- ✅ **Ingesta desde datos reales de guardia** (OCR + RAG con Llama 3.2 + ChromaDB)
 
 ---
 
