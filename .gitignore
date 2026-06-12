@@ -9,3 +9,6 @@ __pycache__/
 *.joblib
 *.csv
 *.ipynb
+*.joblib
+*.csv
+*.ipynb
