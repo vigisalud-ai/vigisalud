@@ -6,3 +6,6 @@ apikey.txt
 __pycache__/
 *.csv
 *.pyc
+*.joblib
+*.csv
+*.ipynb
