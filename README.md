@@ -108,6 +108,8 @@ python prediccion/controller/consulta_clinica.py  # Consulta a Llama 3.3
 
 ## 💻 Arquitectura de ejecución
 
+VigiSalud usa datos demográficos reales de **[Argentina Hub](https://github.com/hectory2k/argentina-hub)**, un proyecto complementario que cura datasets públicos argentinos (Censo 2022, INDEC, BCRA).
+
 VigiSalud corre en dos dispositivos con tareas divididas:
 
 | Dispositivo | Tarea | Fundamento |
