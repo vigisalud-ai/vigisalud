@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow) 
 ![Status](https://img.shields.io/badge/Status-Production-success)
 
-# 🏥 VigiSalud v3.6
+# 🏥 VigiSalud v3.5
 
 **Predicción inteligente de picos de demanda en Guardias Médicas**
 
@@ -106,6 +106,23 @@ python prediccion/controller/consulta_clinica.py  # Consulta a Llama 3.3
 
 👉 [Ver Dashboard](https://vigisalud-ai.github.io/Vigisalud-dashboard/)
 
+## 💻 Arquitectura de ejecución
+
+VigiSalud corre en dos dispositivos con tareas divididas:
+
+| Dispositivo | Tarea | Fundamento |
+|-------------|-------|------------|
+| **Manjaro (i5)** | `censo_extractor.py` → staging/ | `duckdb` wheel Linux x86_64 |
+| **Moto G56 (Termux)** | build, DPA, Indicadores, Modelo_v3_5 | Sin dependencia de duckdb |
+
+### Features demográficas sin duckdb
+
+`feature_engineering.py` en Termux carga `features_patino.json` (precalculado en Manjaro con `censoargentino`).
+
+### Flujo diario
+
+Manjaro: extract censo → git push
+Moto: git pull → build → modelo_v3_5.py → predicciones → Telegram
 
 📝 Licencia
 
