@@ -7,7 +7,7 @@
 
 **Predicción inteligente de picos de demanda en Guardias Médicas**
 
-Desarrollado desde un **Moto G65 con Termux**.
+Desarrollado desde un **Moto G56 con Termux**.
 
 ---
 
@@ -56,7 +56,7 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 - 📊 **Chart.js** + GitHub Pages
 - 🔄 **GitHub Actions**
 - 🤖 **NVIDIA Llama 3.3** (para partes clínicas)
-- 📱 **Termux** (Moto G65)
+- 📱 **Termux** (Moto G56)
 
 ---
 
