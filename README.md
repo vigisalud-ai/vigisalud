@@ -1,5 +1,5 @@
 ![Python](https://img.shields.io/badge/Python-3.11-blue) 
-![MAE](https://img.shields.io/badge/MAE-7.0-brightgreen) 
+![MAE](https://img.shields.io/badge/MAE-7.0-brightgreen) -->![MAE](https://img.shields.io/badge/MAE-4.0--preliminar-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-yellow) 
 ![Status](https://img.shields.io/badge/Status-Production-success)
 
@@ -19,7 +19,8 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 
 ## ✨ Características Principales
 
-- Predicción con **MAE = 7.0** consultas/día
+- Predicción con **MAE = 7.0** consultas/día - Predicción con **MAE = 4.0** consultas/día (preliminar, datos mixtos)
+- **MAE esperado en producción**: 7-10 consultas/día
 - Integración de variables climáticas y calendarias
 - Validación temporal estricta (`TimeSeriesSplit`)
 - Dashboard web + Alertas automáticas por Telegram
@@ -33,10 +34,17 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 | Capa                | Implementación                                      | Impacto                              |
 |---------------------|-----------------------------------------------------|--------------------------------------|
 | **🔗 Conectividad**     | Supabase + Open-Meteo + World Bank                  | Datos centralizados en tiempo real   |
-| **🧠 Inteligencia**     | Random Forest Regressor + 14 features temporales    | Predicción precisa (MAE 7.0)         |
+| **🧠 Inteligencia**     | Random Forest Regressor + 14 features temporales    | Predicción precisa (MAE 7.0)         | | 🧠 **Inteligencia** | Random Forest Regressor + 14 features temporales + 6 demográficas (20 total) | MAE 4.0 (preliminar) |
 | **⚡ Automatización**   | GitHub Actions (6 AM) + Limpieza cada 72h           | Ejecución automática                 |
 | **📊 Experiencia**      | Chart.js Dashboard + Bot de Telegram                | Fácil de usar desde cualquier dispositivo |
 | **🛡️ Gobernanza**       | RLS + Cifrado + Licencia MIT                        | Seguridad y código abierto           |
+
+## 📊 Resultados
+
+- **MAE actual**: 4.0 consultas/día (preliminar, datos mixtos)
+- **MAE esperado en producción**: 7-10 consultas/día
+
+> ⚠️ **Nota:** El MAE de 4.0 es preliminar, obtenido con datos mixtos (simulados + reales). El piloto de 30 días en Las Lomitas determinará el MAE real en producción, estimado entre 7-10 consultas/día.
 
 ---
 
