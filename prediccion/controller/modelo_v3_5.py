@@ -59,6 +59,16 @@ df = pd.DataFrame(response.json())
 df['fecha'] = pd.to_datetime(df['fecha'])
 df = df[df['fecha'] >= '2023-01-01'].copy()
 
+# 🔥 NUEVO: Cargar features demográficas de Argentina Hub
+from feature_engineering import cargar_datos_demograficos, agregar_features_demograficas
+
+try:
+    features_demo = cargar_datos_demograficos()
+    df = agregar_features_demograficas(df, features_demo)
+    print(f"📊 Features demográficas cargadas: {list(features_demo.keys())}")
+except Exception as e:
+    print(f"⚠ No se pudieron cargar features demográficas: {e}")
+
 print(f"📊 Datos: {len(df)} registros | {df['fecha'].min().date()} → {df['fecha'].max().date()}")
 
 # ==================== FEATURE ENGINEERING ====================
@@ -102,26 +112,13 @@ if not clima_df.empty:
     df = df.merge(clima_df, on=['fecha', 'zona'], how='left')
     df['temperatura_media'] = df['temperatura_media'].fillna(df['temperatura_media'].mean())
 
-#print("🌡️ Obteniendo temperatura...")
-#clima_total = pd.DataFrame()
-#for zona in df['zona'].unique():
-#    if zona in COORDENADAS:
-#        lat, lon = COORDENADAS[zona]
-#        clima = get_historical_weather(lat, lon, df['fecha'].min().strftime("%Y-%m-%d"), df['fecha'].max().strftime("%Y-%m-%d"))
-#        if not clima.empty:
-#            clima['zona'] = zona
-#            clima_total = pd.concat([clima_total, clima])
-
-#if not clima_total.empty:
-#    df = df.merge(clima_total, on=['fecha', 'zona'], how='left')
-
-#df['temperatura_media'] = df.groupby('zona')['temperatura_media'].transform(lambda x: x.fillna(x.mean()))
-#df = df.bfill()
-
 # ==================== MODELO ====================
+# 🔥 NUEVO: 6 features demográficas agregadas al final
 features_num = ['dia_desde_inicio', 'mes', 'dia_semana', 'mes_sin', 'dia_semana_sin',
                 'consultas_lag_1', 'consultas_lag_7', 'consultas_lag_14', 'consultas_ma7',
-                'es_fin_de_semana', 'es_feriado', 'es_vacaciones', 'es_no_laboral']
+                'es_fin_de_semana', 'es_feriado', 'es_vacaciones', 'es_no_laboral',
+                'poblacion_total', 'pct_mujeres', 'pct_piso_tierra', 'pct_vivienda_precaria',
+                'pct_sin_cobertura', 'poblacion_sin_cobertura']
 
 X = df[features_num + ['zona']]
 y = df['consultas'].values
@@ -164,6 +161,11 @@ for zona in ['Norte', 'Centro', 'Sur']:
     for col in ['consultas_lag_1', 'consultas_lag_7', 'consultas_lag_14', 'consultas_ma7']:
         futuro[col] = last[col]
     futuro['temperatura_media'] = last.get('temperatura_media', 15.0)
+    
+    # 🔥 NUEVO: Features demográficas (constantes por zona)
+    for col in ['poblacion_total', 'pct_mujeres', 'pct_piso_tierra', 'pct_vivienda_precaria',
+                'pct_sin_cobertura', 'poblacion_sin_cobertura']:
+        futuro[col] = last[col]
 
     pred = modelo.predict(futuro[features_num + ['zona']])
     
@@ -219,3 +221,31 @@ import joblib
 joblib.dump(modelo, 'modelo_v3_5.joblib')
 print("✅ Modelo guardado para inferencia")
 print("\n🎉 ¡Proceso completado correctamente!")
+
+# Exportar explicación como JSON para el dashboard
+import json
+
+explicacion = {
+    "fecha": datetime.now().strftime("%Y-%m-%d"),
+    "predicciones": [],
+    "factores": {}
+}
+
+for _, row in df_pred.iterrows():
+    explicacion["predicciones"].append({
+        "fecha": row["fecha"],
+        "zona": row["zona"],
+        "consultas_predichas": row["consultas_predichas"]
+    })
+
+# 🔥 NUEVO: Extraer importancia de features
+feature_names = modelo.named_steps['preprocessor'].get_feature_names_out()
+importances = modelo.named_steps['model'].feature_importances_
+
+for name, imp in sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True):
+    explicacion["factores"][name] = round(float(imp), 4)
+
+with open("explicacion_prediccion.json", "w") as f:
+    json.dump(explicacion, f, indent=2, ensure_ascii=False)
+
+print("📊 Explicación exportada a explicacion_prediccion.json")
