@@ -1,7 +1,21 @@
-![Python](https://img.shields.io/badge/Python-3.11-blue) 
-![MAE](https://img.shields.io/badge/MAE-7.0-brightgreen) -->![MAE](https://img.shields.io/badge/MAE-4.0--preliminar-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-yellow) 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+
+
+
+
+![MAE](https://img.shields.io/badge/MAE-4.0--preliminar-brightgreen)
+
+
+
+
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
+
+
+
 ![Status](https://img.shields.io/badge/Status-Production-success)
+
+
 
 # 🏥 VigiSalud v3.5
 
@@ -19,7 +33,7 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 
 ## ✨ Características Principales
 
-- Predicción con **MAE = 7.0** consultas/día - Predicción con **MAE = 4.0** consultas/día (preliminar, datos mixtos)
+- Predicción con **MAE = 4.0** consultas/día (preliminar — ver sección Resultados)
 - **MAE esperado en producción**: 7-10 consultas/día
 - Integración de variables climáticas y calendarias
 - Validación temporal estricta (`TimeSeriesSplit`)
@@ -31,13 +45,15 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 
 ## 🏗️ Arquitectura (5 Capas)
 
-| Capa                | Implementación                                      | Impacto                              |
-|---------------------|-----------------------------------------------------|--------------------------------------|
-| **🔗 Conectividad**     | Supabase + Open-Meteo + World Bank                  | Datos centralizados en tiempo real   |
-| **🧠 Inteligencia**     | Random Forest Regressor + 14 features temporales    | Predicción precisa (MAE 7.0)         | | 🧠 **Inteligencia** | Random Forest Regressor + 14 features temporales + 6 demográficas (20 total) | MAE 4.0 (preliminar) |
-| **⚡ Automatización**   | GitHub Actions (6 AM) + Limpieza cada 72h           | Ejecución automática                 |
-| **📊 Experiencia**      | Chart.js Dashboard + Bot de Telegram                | Fácil de usar desde cualquier dispositivo |
-| **🛡️ Gobernanza**       | RLS + Cifrado + Licencia MIT                        | Seguridad y código abierto           |
+| Capa                | Implementación                                                                | Impacto                                   |
+|---------------------|--------------------------------------------------------------------------------|--------------------------------------------|
+| **🔗 Conectividad**     | Supabase + Open-Meteo + World Bank                                           | Datos centralizados en tiempo real        |
+| **🧠 Inteligencia**     | Random Forest Regressor + 14 features temporales + 6 demográficas (20 total) | MAE 4.0 (preliminar)                      |
+| **⚡ Automatización**   | GitHub Actions (6 AM) + Limpieza cada 72h                                    | Ejecución automática                      |
+| **📊 Experiencia**      | Chart.js Dashboard + Bot de Telegram                                         | Fácil de usar desde cualquier dispositivo |
+| **🛡️ Gobernanza**       | RLS + Cifrado + Licencia MIT                                                 | Seguridad y código abierto                |
+
+---
 
 ## 📊 Resultados
 
@@ -79,28 +95,34 @@ Anticipar con **7-14 días de anticipación** el volumen de consultas en la Guar
 
 ## 🚀 Instalación y Uso
 
-```bash
+\`\`\`bash
 git clone https://github.com/vigisalud-ai/vigisalud.git
 cd vigisalud
 pip install -r requirements.txt
+\`\`\`
 
-#Configuración (archivo .env):
+Configuración (archivo `.env`):
 
+\`\`\`
 SUPABASE_URL=tu_supabase_url
 SUPABASE_KEY=tu_supabase_key
 TELEGRAM_TOKEN=tu_telegram_bot_token
 TELEGRAM_CHAT_ID=tu_chat_id
 NVIDIA_API_KEY=tu_key (opcional)
+\`\`\`
 
-#Comandos principales
+Comandos principales:
 
-python prediccion/controller/modelo_v3_5.py   # Pipeline completo
-python prediccion/controller/train.py         # Entrenar modelo
-python prediccion/controller/infer.py         # Inferencia
+\`\`\`bash
+python prediccion/controller/modelo_v3_5.py       # Pipeline completo
+python prediccion/controller/train.py             # Entrenar modelo
+python prediccion/controller/infer.py             # Inferencia
 python prediccion/controller/consulta_clinica.py  # Consulta a Llama 3.3
-```
+\`\`\`
 
-#🧭 Filosofía del Proyecto
+---
+
+## 🧭 Filosofía del Proyecto
 
 | Principio | Por qué importa |
 |-----------|-----------------|
@@ -109,10 +131,13 @@ python prediccion/controller/consulta_clinica.py  # Consulta a Llama 3.3
 | 💰 **Costo cero** | Stack 100% gratuito |
 | 🧠 **KISS** | Arquitectura modular |
 
+---
 
-🌐 Demo en Vivo
+## 🌐 Demo en Vivo
 
 👉 [Ver Dashboard](https://vigisalud-ai.github.io/Vigisalud-dashboard/)
+
+---
 
 ## 💻 Arquitectura de ejecución
 
@@ -131,10 +156,14 @@ VigiSalud corre en dos dispositivos con tareas divididas:
 
 ### Flujo diario
 
+\`\`\`
 Manjaro: extract censo → git push
-Moto: git pull → build → modelo_v3_5.py → predicciones → Telegram
+Moto:    git pull → build → modelo_v3_5.py → predicciones → Telegram
+\`\`\`
 
-📝 Licencia
+---
+
+## 📝 Licencia
 
 MIT License - Uso libre para fines educativos, de investigación y salud pública.
 Para uso comercial o implementación institucional, contactar al autor.
