@@ -223,12 +223,85 @@ for _, row in df_pred.iterrows():
 
 print(f"✅ {alertas_enviadas} alertas procesadas")
 
+# ==================== BENCHMARK INTEGRATION ====================
+print("\n" + "="*60)
+print("🎯 COMPARACIÓN CON BENCHMARK VIGISALUD (MAE 7.2)")
+print("="*60)
+
+# Calcular MAE en formato comparable al benchmark
+def calcular_mae_benchmark_format():
+    """Calcula MAE en mismo formato que benchmark (últimos 30 días)"""
+    y_true = df['consultas'].values[-30:]
+    y_pred = modelo.predict(X.iloc[-30:])
+    return mean_absolute_error(y_true, y_pred)
+
+mae_actual = calcular_mae_benchmark_format()
+
+print(f"📊 TU MODELO v3.5:    MAE = {mae_actual:.1f} consultas/día")
+print(f"📈 BENCHMARK BASE:    MAE = 7.2 consultas/día")
+print(f"📅 PERIODO:           Últimos 30 días")
+print(f"🎯 REFERENCIA:        Predicción 7 días hacia adelante")
+
+# Análisis comparativo
+diferencia = mae_actual - 7.2
+porcentaje_mejora = ((7.2 - mae_actual) / 7.2) * 100
+
+if mae_actual < 7.2:
+    print(f"✅ ¡EXCELENTE! Superas el benchmark por {abs(porcentaje_mejora):.1f}%")
+    print(f"   Tu modelo es {abs(porcentaje_mejora):.1f}% más preciso que la línea base")
+
+    # Guardar log de éxito
+    éxito_data = {
+        'fecha': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'modelo': 'v3.5',
+        'mae_actual': float(mae_actual),
+        'mae_benchmark': 7.2,
+        'mejora_porcentaje': float(porcentaje_mejora),
+        'supera_benchmark': True
+    }
+
+else:
+    print(f"🔧 POR MEJORAR: Te faltan {diferencia:.1f} puntos para superar el benchmark")
+    print(f"   El benchmark actual es {abs(porcentaje_mejora):.1f}% más preciso")
+
+    éxito_data = {
+        'fecha': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'modelo': 'v3.5',
+        'mae_actual': float(mae_actual),
+        'mae_benchmark': 7.2,
+        'mejora_porcentaje': float(porcentaje_mejora),
+        'supera_benchmark': False
+    }
+
+# Guardar comparación en Supabase (opcional)
+try:
+    requests.post("https://qlbczflygozfvwyilhes.supabase.co/rest/v1/benchmark_logs",
+                 headers=headers, json=éxito_data)
+    print("💾 Comparación guardada en Supabase")
+except:
+    print("💡 Comparación calculada localmente")
+
+print("="*60)
+
+# Sugerencia de mejora basada en la diferencia
+if not éxito_data['supera_benchmark']:
+    print("\n💡 SUGERENCIAS PARA MEJORAR:")
+    if diferencia > 3:
+        print("   • Revisar features temporales (lag variables)")
+        print("   • Optimizar hiperparámetros del RandomForest")
+    elif diferencia > 1:
+        print("   • Mejorar tratamiento de días no laborales")
+        print("   • Incluir más datos históricos")
+    else:
+        print("   • Pequeños ajustes en preprocesamiento")
+        print("   • Probar diferentes ventanas de promedio móvil")
+
+print("\n🎉 ¡Proceso completado correctamente!")
 import joblib
 joblib.dump(modelo, 'modelo_v3_5.joblib')
 print("✅ Modelo guardado para inferencia")
 print("\n🎉 ¡Proceso completado correctamente!")
 
-# Exportar explicación como JSON para el dashboard
 # Exportar explicación como JSON para el dashboard
 import json
 
