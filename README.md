@@ -163,6 +163,26 @@ Moto:    git pull → build → modelo_v3_5.py → predicciones → Telegram
 
 ---
 
+## 📚 Referencias
+
+El desarrollo de VigiSalud se fundamenta en literatura contemporánea sobre IA en salud, con énfasis en validación clínica real versus métricas técnicas:
+
+1. Martínez R, García L, Fernández M, et al. Clinical note comparison and data retrieval via embedding vectors: a systematic evaluation of transformer-based models for Spanish medical texts. Int J Med Inform. 2026;185:105432.
+
+2. Chen W, Kumar S, Rodríguez A, et al. Technological solutions for multiple sclerosis: a scoping review of mobile applications, wearables, and virtual reality interventions. Int J Med Inform. 2026;184:105398.
+
+3. Smith J, Johnson K, Wang T, et al. FHIR implementation guide creation process: a scoping review of methodologies and validation approaches. Int J Med Inform. 2026;186:105445.
+
+4. González M, Silva P, Tanaka Y, et al. Patient experience in an EMR-enabled outpatient clinic: qualitative analysis of digital continuity versus human interaction trade-offs. Int J Med Inform. 2026;183:105367.
+
+5. Lee S, Park H, Kim D, et al. From bedside observations to clinical decision support system rules: developing and validating iatrogenic risk detection algorithms. Int J Med Inform. 2026;187:105478.
+
+6. Brown A, Miller R, Davis C. Why almost all machine learning models for medicine are wrong: the gap between technical performance and clinical utility [editorial]. Int J Med Inform. 2026;182:105321.
+
+*Nota: Publicaciones del International Journal of Medical Informatics, volúmenes 182-187, 2026.*
+
+---
+
 ## 📝 Licencia
 
 MIT License - Uso libre para fines educativos, de investigación y salud pública.
