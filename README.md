@@ -181,6 +181,17 @@ El desarrollo de VigiSalud se fundamenta en literatura contemporánea sobre IA e
 
 *Nota: Publicaciones del International Journal of Medical Informatics, volúmenes 182-187, 2026.*
 
+## Research & Publications
+
+**Narrative Review:** "Serverless SaaS Platforms for Medical AI"
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21195442.svg)](https://doi.org/10.5281/zenodo.21195442)
+- Describes the architectural approach behind VigiSalud
+- Published open-access
+
+This work documents the rationale for using serverless/open-source 
+components instead of proprietary SaaS for epidemiological prediction 
+in resource-constrained settings.
+
 ---
 
 ## 📝 Licencia
